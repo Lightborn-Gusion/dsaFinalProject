@@ -1,1 +1,1 @@
-web: gunicorn dsaFinalProject.wsgi
+web: gunicorn finalProject.wsgi
