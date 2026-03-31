@@ -1,0 +1,220 @@
+/* recommender/static/recommender/css/light-mode.css */
+
+/* 1. Base Variables (Light Mode Default) */
+:root {
+    --cinema-red: #E50914;
+    --bg-color: #f8f9fa;
+    --text-color: #212529;
+    --nav-bg: #ffffff;
+    --card-bg: #ffffff;
+    --border-color: #dee2e6;
+}
+
+/* 2. Dark Mode Variables (Activates when body has .dark-theme class) */
+body.dark-theme {
+    --bg-color: #141414;
+    --text-color: #e5e5e5;
+    --nav-bg: #000000;
+    --card-bg: #2b2b2b;
+    --border-color: #444444;
+}
+
+/* 3. Apply the Variables globally with a smooth transition */
+body {
+    background-color: var(--bg-color) !important;
+    color: var(--text-color) !important;
+    transition: background-color 0.3s ease, color 0.3s ease; /* Smooth fade effect */
+}
+
+h1, h2, h3, h4, h5, h6, strong, p, span, a {
+    color: var(--text-color) !important;
+}
+
+/* 4. Update Navbar and Cards to use variables */
+.navbar {
+    position: relative !important;
+    background-color: var(--nav-bg) !important;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.3);
+    transition: background-color 0.3s ease;
+}
+
+.list-group-item.bg-dark {
+    background-color: var(--card-bg) !important;
+    color: var(--text-color) !important;
+    border-color: var(--border-color) !important;
+    transition: background-color 0.3s ease;
+}
+
+/* 5. Keep the Cinema Red Accents (Same as before) */
+.text-primary { color: var(--cinema-red) !important; }
+.bg-primary { background-color: var(--cinema-red) !important; }
+.btn-primary { background-color: var(--cinema-red) !important; border-color: var(--cinema-red) !important; color: #fff !important; }
+.btn-primary:hover { background-color: #b20710 !important; border-color: #b20710 !important; }
+.btn-outline-primary { color: var(--cinema-red) !important; border-color: var(--cinema-red) !important; }
+.btn-outline-primary:hover { background-color: var(--cinema-red) !important; color: #fff !important; }
+
+/* 6. Fix the footer text */
+.footer p, .footer a { color: var(--text-dark) !important; }
+
+/* 7. Movie Card Theme Overrides */
+.movie-card.bg-dark {
+    background-color: var(--card-bg) !important;
+    border-color: var(--border-color) !important;
+    transition: background-color 0.3s ease, transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+/* Ensure the text is perfectly readable in both modes */
+.movie-card .card-title,
+.movie-card .genre-text {
+    color: var(--text-color) !important;
+}
+
+/* Make the genre text slightly faded for a cleaner look */
+body.dark-theme .movie-card .genre-text {
+    color: #a0a0a0 !important;
+}
+body:not(.dark-theme) .movie-card .genre-text {
+    color: #6c757d !important;
+}
+/* recommender/static/recommender/css/theme.css (Add at the end) */
+
+/* --- Cinema-Style Modal (Light & Dark) --- */
+
+/* Base modal content background and border */
+.netflix-style-modal {
+    background-color: var(--card-bg) !important;
+    border: 1px solid var(--border-color) !important;
+    border-radius: 12px;
+    box-shadow: 0 10px 40px rgba(0,0,0,0.5);
+    transition: background-color 0.3s ease, border-color 0.3s ease;
+}
+
+/* Modal text colors based on current theme variables */
+.modal-main-title,
+.modal-movie-title,
+.modal-sub-text,
+.modal-desc-text {
+    color: var(--text-color) !important;
+    transition: color 0.3s ease;
+}
+
+/* Add slight opacity to descriptive text for better hierarchy */
+.modal-sub-text { opacity: 0.8; }
+.modal-desc-text { opacity: 0.7; }
+
+/* The "You should watch" text uses the primary color (cinema red) */
+.text-primary {
+    color: var(--cinema-red) !important;
+}
+
+/* Button colors */
+.modal-close-btn {
+    filter: invert(1); /* Default is dark close, invert makes it light for dark mode */
+}
+
+/* Light Mode Overrides: make the close button dark */
+body:not(.dark-theme) .modal-close-btn {
+    filter: invert(0) !important;
+}
+
+/* Center icon and badge colors */
+.modal-icon-connection {
+    width: 60px;
+    height: 60px;
+    box-shadow: 0 0 20px rgba(229, 9, 20, 0.5);
+}
+
+.modal-badge {
+    color: var(--text-color);
+    font-size: 0.8rem;
+    font-weight: 600;
+    letter-spacing: 1px;
+}
+
+/* --- Image Styling & Glow Effects --- */
+.modal-img-container {
+    padding: 10px; /* space for the glow */
+}
+
+.netflix-style-img {
+    transition: transform 0.3s ease;
+}
+
+/* The red glow effect on the recommended image */
+.rec-glow-container .rec-glow-img {
+    border: 2px solid var(--cinema-red);
+    box-shadow: 0 0 20px rgba(229,9,20,0.4);
+}
+.recommendation-shelf {
+    display: flex !important;
+    overflow-x: auto !important;
+    white-space: nowrap;
+    -webkit-overflow-scrolling: touch;
+    padding-bottom: 15px; /* space for scrollbar */
+}
+
+.netflix-card-mini {
+    flex: 0 0 auto; /* Prevents cards from shrinking */
+    width: 150px;   /* Consistent width for the row */
+    cursor: pointer;
+    transition: transform 0.2s;
+}
+
+.netflix-card-mini:hover {
+    transform: translateY(-5px);
+}
+/* Force the button circle to stay white */
+.watchlist-btn {
+    position: absolute;
+    top: 15px;
+    left: 15px;
+    z-index: 10;
+    width: 38px;
+    height: 38px;
+    background-color: #ffffff !important;
+    border-radius: 50% !important;
+    display: flex !important;
+    align-items: center;
+    justify-content: center;
+    border: none !important;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.3) !important;
+}
+
+/* Default icon: Black outline */
+.watchlist-btn i {
+    font-size: 1.1rem !important;
+    text-shadow: none !important;
+    transition: all 0.2s ease;
+}
+
+/* Hover effect: Turns red and scales slightly */
+.watchlist-btn:hover i {
+    color: #e50914 !important; /* Turns red when you mouse over it */
+    transform: scale(1.1);
+}
+/* Only turn the loader white when the body has the light-mode class */
+body.light-mode #page-loader {
+    background-color: #ffffff !important;
+}
+/* --- BOOTSTRAP HIJACK --- */
+/* This forces any hardcoded Bootstrap classes to obey your theme variables! */
+
+/* Make all bg-dark containers change with the theme (except the footer) */
+.bg-dark:not(.footer) {
+    background-color: var(--bg-color) !important;
+}
+
+/* Force any hardcoded white text to flip to dark text in Light Mode */
+.text-white:not(.footer *), .text-light:not(.footer *) {
+    color: var(--text-color) !important;
+}
+/* --- FOOTER OVERRIDES --- */
+/* Force all text and links inside the footer to stay pure white permanently */
+.footer, .footer p, .footer a, .footer span, .footer div {
+    color: #ffffff !important;
+}
+
+/* Optional: Make footer links turn Cinema Red when you hover over them */
+.footer a:hover {
+    color: #e50914 !important;
+}

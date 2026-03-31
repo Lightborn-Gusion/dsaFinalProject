@@ -1,0 +1,47 @@
+{% load static %}
+<div class="container-fluid p-0 page-header-anim wow slideInDown" data-wow-duration="0.5s">
+    <nav class="navbar navbar-expand-lg navbar-light px-lg-5">
+        <a href="/" class="navbar-brand ms-4 ms-lg-0">
+            <h2 class="mb-0 text-primary text-uppercase"><i class="fa-solid fa-film me-2"></i>CineRadar 2026</h2>
+            <h5 class="mb-0 text-primary text-uppercase"><span></span>YOUR MOVIE RECOMMENDER</h5>
+        </a>
+        <button type="button" class="navbar-toggler me-4" data-bs-toggle="collapse" data-bs-target="#navbarCollapse">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="collapse navbar-collapse" id="navbarCollapse">
+            <div class="navbar-nav mx-auto p-4 p-lg-0">
+
+        {% with request.resolver_match.url_name as url_name %}
+
+        <a href="{% url 'home' %}"
+           class="nav-item nav-link {% if url_name == 'home' %}active fw-bold text-primary{% endif %}">
+           Dashboard
+        </a>
+
+        <a href="{% url 'all_movies' %}"
+           class="nav-item nav-link {% if url_name == 'all_movies' %}active fw-bold text-primary{% endif %}">
+           All Movies
+        </a>
+
+        <a href="{% url 'upcoming' %}"
+           class="nav-item nav-link {% if url_name == 'upcoming' %}active fw-bold text-primary{% endif %}">
+           Upcoming
+        </a>
+
+        <a href="{% url 'movie_list' %}"
+           class="nav-item nav-link {% if url_name == 'movie_list' %}active fw-bold text-primary{% endif %}">
+           My List
+        </a>
+
+        {% endwith %}
+    </div>
+
+            <div class="d-none d-lg-flex ms-auto">
+                <button id="theme-toggle" class="btn btn-outline-primary rounded-circle" style="width: 45px; height: 45px;">
+                    <i class="fa-solid fa-moon" id="theme-icon"></i>
+                </button>
+            </div>
+        </div>
+    </nav>
+</div>

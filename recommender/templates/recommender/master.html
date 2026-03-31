@@ -1,0 +1,123 @@
+{% load static %}
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>CineRadar - Your 2026 Movie Tracker</title>
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Josefin+Sans:wght@300;700&family=Work+Sans:wght@400;600&display=swap" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.0/css/all.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.4.1/font/bootstrap-icons.css" rel="stylesheet">
+
+    <script>
+        const isDark = localStorage.getItem('theme') === 'dark';
+        if (isDark) {
+            document.documentElement.classList.add('dark-theme');
+        }
+    </script>
+
+    <style>
+        html { overflow-y: scroll; }
+
+        html, body { background-color: #f8f9fa !important; }
+        #page-loader {
+            position: fixed; top: 0; left: 0; width: 100vw; height: 100vh;
+            background-color: #f8f9fa !important; /* Soft White */
+            z-index: 999999; display: flex; align-items: center; justify-content: center;
+            transition: opacity 0.3s ease, visibility 0.3s ease;
+        }
+
+        html.dark-theme, html.dark-theme body {
+            background-color: #141414 !important;
+        }
+        html.dark-theme #page-loader, body.dark-theme #page-loader {
+            background-color: #141414 !important; /* Dark Grey/Black */
+        }
+
+        .loader-hidden { opacity: 0 !important; visibility: hidden !important; }
+        .pulse-loader { position: relative; width: 50px; height: 50px; }
+        .pulse-loader::before, .pulse-loader::after {
+            content: ''; position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+            border-radius: 50%; background-color: #e50914 !important; opacity: 0.6;
+            animation: pulse-anim 2s infinite ease-in-out;
+        }
+        .pulse-loader::after { animation-delay: -1s; }
+        @keyframes pulse-anim { 0%, 100% { transform: scale(0.0); } 50% { transform: scale(1.0); } }
+    </style>
+
+    <link href="{% static 'recommender/lib/animate/animate.min.css' %}" rel="stylesheet">
+    <link href="{% static 'recommender/lib/lightbox/css/lightbox.min.css' %}" rel="stylesheet">
+    <link href="{% static 'recommender/lib/owlcarousel/assets/owl.carousel.min.css' %}" rel="stylesheet">
+    <link href="{% static 'recommender/css/bootstrap.min.css' %}" rel="stylesheet">
+    <link href="{% static 'recommender/css/style.css' %}" rel="stylesheet">
+    <link href="{% static 'recommender/css/light-mode.css' %}" rel="stylesheet">
+    <link href="{% static 'recommender/css/all-movies.css' %}" rel="stylesheet">
+    <link href="{% static 'recommender/css/fragments.css' %}" rel="stylesheet">
+</head>
+
+<body class="d-flex flex-column min-vh-100">
+
+    <div id="page-loader">
+        <div class="pulse-loader"></div>
+    </div>
+
+    {% include 'recommender/fragments/header.html' %}
+
+    <div class="container-fluid py-5 flex-grow-1" id="main-content-area">
+        {% block content %}
+        {% endblock %}
+    </div>
+
+    {% include 'recommender/fragments/footer.html' %}
+
+    <div class="modal fade" id="recommendModal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-lg">
+        <div class="modal-content netflix-style-modal">
+            <div class="modal-header border-bottom-0 p-4">
+                <h2 class="modal-title h4 mb-0 modal-main-title">
+                    <i class="fa-solid fa-wand-magic-sparkles text-primary me-2"></i>Recommendation
+                </h2>
+                <button type="button" class="btn-close modal-close-btn" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body p-4 pt-0">
+
+                <div class="mb-4 d-flex align-items-start">
+                    <div style="width: 90px; flex-shrink: 0;" class="me-3">
+                        <img id="rec-watched-img" src="" class="img-fluid rounded shadow-sm" style="aspect-ratio: 2/3; object-fit: cover;">
+                    </div>
+                    <div class="flex-grow-1">
+                        <p class="modal-sub-text small mb-1">BECAUSE YOU LIKE</p>
+                        <h4 id="rec-watched-title" class="modal-movie-title mb-2 h5 fw-bold">Movie A</h4>
+                        <p id="rec-watched-desc" class="modal-desc-text small mb-0" style="line-height: 1.4; opacity: 0.85;">
+                            Movie description will load here...
+                        </p>
+                    </div>
+                </div>
+
+                <hr class="border-secondary opacity-25 mb-4">
+                <div class="d-flex justify-content-between align-items-end mb-3">
+                    <p class="text-primary fw-bold mb-0 text-uppercase small" style="letter-spacing: 1px;">Similar Genre Like This</p>
+                    <span class="text-muted small">Scroll to explore <i class="fa-solid fa-arrow-right ms-1"></i></span>
+                </div>
+                <div class="recommendation-shelf d-flex flex-nowrap gap-3 pb-3" id="recommendation-list" style="overflow-x: auto; scrollbar-width: thin; -webkit-overflow-scrolling: touch;">
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+    <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="{% static 'recommender/lib/wow/wow.min.js' %}"></script>
+    <script src="{% static 'recommender/lib/easing/easing.min.js' %}"></script>
+    <script src="{% static 'recommender/lib/waypoints/waypoints.min.js' %}"></script>
+    <script src="{% static 'recommender/lib/owlcarousel/owl.carousel.min.js' %}"></script>
+    <script src="{% static 'recommender/lib/lightbox/js/lightbox.min.js' %}"></script>
+
+    <script src="{% static 'recommender/js/main.js' %}"></script>
+    <script src="{% static 'recommender/js/master.js' %}"></script>
+    <script src="{% static 'recommender/js/fragments.js' %}"></script>
+</body>
+</html>
